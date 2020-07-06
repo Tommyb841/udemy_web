@@ -1,0 +1,29 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+but	color.js	/^var but = document.querySelector(".clr");$/;"	v
+changeColors	color_game.js	/^function changeColors(color){$/;"	f
+colorDisplay	color_game.js	/^var colorDisplay = document.getElementById("colorDisplay");$/;"	v
+colors	color_game.js	/^var colors = generateRandomColors(hard);$/;"	v
+easy	color_game.js	/^var easy = 3;$/;"	v
+gameover	score.js	/^var gameover = false;$/;"	v
+generateRandomColors	color_game.js	/^function generateRandomColors(num){$/;"	f
+getColors	color_game.js	/^function getColors(){$/;"	f
+hard	color_game.js	/^var hard = 6;$/;"	v
+lis	todo.js	/^var lis = document.querySelectorAll("li");$/;"	v
+messageDisplay	color_game.js	/^var messageDisplay = document.querySelector("#message");$/;"	v
+numInput	score.js	/^var numInput = document.querySelector("input");$/;"	v
+p1Button	score.js	/^var p1Button= document.querySelector("#p1");$/;"	v
+p1Display	score.js	/^var p1Display = document.querySelector("#p1Display")$/;"	v
+p2Button	score.js	/^var p2Button= document.querySelector("#p2");$/;"	v
+p2score	score.js	/^var p2score = 0;$/;"	v
+pickColor	color_game.js	/^function pickColor(){$/;"	f
+pickedColor	color_game.js	/^var pickedColor = pickColor();\/\/randomly selected color$/;"	v
+playto	score.js	/^var playto = document.getElementById("playtolim");$/;"	v
+reset	score.js	/^function reset(){$/;"	f
+rset	score.js	/^var rset = document.getElementById("rset");$/;"	v
+squares	color_game.js	/^var squares = document.querySelectorAll(".square");$/;"	v
+winningscore	score.js	/^var winningscore = 5;$/;"	v

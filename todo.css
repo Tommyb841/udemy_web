@@ -1,0 +1,29 @@
+body{
+	height: 100%;
+	background-color: grey;
+}
+h1{
+	background:blue;
+	width:50%;
+	text-indent: 13%;	
+	font:	white;
+	border-style:solid;
+	border-radius:20px;
+	margin-left:25%;
+}
+#container{
+	position: relative;
+	text-align:center;
+}
+#tdl{
+	list-style-type: none;
+}
+#cloud{
+	color:white;
+	position: relative; left: 23%; 
+}
+
+#todo{
+	color:white;
+}
+

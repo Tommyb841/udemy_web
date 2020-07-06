@@ -1,0 +1,59 @@
+body {
+	background-color: #232323;
+}
+
+.square{
+	width: 30%;
+	background: purple;
+	padding-bottom: 30%;
+	float: left;
+	margin: 1.66%;
+}
+
+#container{
+	padding-top: 40px;
+	margin: 0 auto;
+	max-width: 600px;
+}
+
+h1{
+	text-align:center;
+	margin: 0 auto;
+	padding:150px;
+	color:white;
+}
+
+#message{
+	text:uppercase;
+	text-align:center;
+	margin:0 auto;
+	color:black;
+}
+
+#colorDisplay{
+	text-transform:uppercase !important;
+	font-size:50px;
+}
+
+#menu{
+	background:white;
+	text-align:center;
+	margin: 0 auto;
+}
+#banner{
+	height:auto;
+	margin:0 auto;
+	background:blue;
+}
+
+.options{
+	font-size: 30px;
+	color:blue;
+}
+
+#new{
+	position:relative;
+	right:200px;
+	background:transparent;
+	border:none;
+}

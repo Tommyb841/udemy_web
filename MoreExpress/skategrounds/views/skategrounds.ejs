@@ -1,0 +1,9 @@
+<!DOCTYPE HTML>
+<h1>This is the Skate Grounds Page</h1>
+
+<% skategrounds.forEach(function(skateground){ %>
+	<div id="areas">
+		<h4><%= skateground.name %> </h4>
+		<img src="<%=skateground.image  %>">
+	</div>
+<% }) %>
