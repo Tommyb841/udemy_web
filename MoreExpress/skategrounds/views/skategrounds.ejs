@@ -1,4 +1,6 @@
 <!DOCTYPE HTML>
+
+<%- include("partials/header") %>
 <h1>This is the Skate Grounds Page</h1>
 
 <% skategrounds.forEach(function(skateground){ %>
@@ -7,3 +9,5 @@
 		<img src="<%=skateground.image  %>">
 	</div>
 <% }) %>
+
+<%- include("partials/footer")  %>

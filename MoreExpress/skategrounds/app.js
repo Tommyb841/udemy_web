@@ -4,7 +4,7 @@ const axios = require('axios');
 app.set("view engine", "ejs");
 
 app.get("/",(req,res) => {
-	res.send("welcome to the skate grounds page")
+	res.render("landing");
 });
 
 app.get("/skategrounds",(req,res) => {

@@ -28,7 +28,7 @@ app.get("/results", (req,res) => {
 	
 			.catch(function (error) {
 				// handle error
-				console.log(error);
+				console.log("there was an error");
 			})
 });
 
