@@ -6,7 +6,6 @@ const axios = require('axios');
 app.use(bodyParser.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
-
 var skategrounds = [
 		{name: "Brooklyn banks", 
 			image:"https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.qhoIwYVgKBkLLIH8Ia_wogHaFk%26pid%3DApi&f=1"},
@@ -41,5 +40,5 @@ app.get("/skategrounds/new",(req,res) => {
 
 
 app.listen(process.env.PORT, process.env.IP, function(){
-		console.log("Movie App has started!!!");
+		console.log("Skategrounds App has started!!!");
 	});
