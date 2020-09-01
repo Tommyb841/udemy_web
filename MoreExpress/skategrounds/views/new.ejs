@@ -1,10 +1,14 @@
 <!DOCTYPE HTML>
 <%- include("partials/header") %>
-<h1>Create a New Skateground</h1>
+<div class="container">
+		<h1>Create a New Skateground</h1>
 
-<form action="/skategrounds" method="POST" id="form1">
-		<input type="text" name="name"  placeholder="name">
-		<input type="text" name="image"  placeholder="image url">
-		<button form="form1" type="text">Submit!</button>
-</form>
+	<form action="/skategrounds" method="POST" id="form1">
+		<div class="form-row align-items-center">
+			<input class="form-control mb-2"type="text" name="name"  placeholder="name">
+			<input class="form-control mb-2" type="text" name="image"  placeholder="image url">
+			<button type="submit" class="btn btn-success" form="form1">Submit!</button>
+		</div>
+	</form>
+</div>
 <%- include("partials/footer") %>
