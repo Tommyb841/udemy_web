@@ -10,7 +10,7 @@ const db = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
 	password: '@Sxc&SQL841',
-	database: 'Inventory_app'
+	database: 'Inventory'
 });
 
 //not sure what this does
@@ -74,17 +74,23 @@ app.get("/skategrounds/new",(req,res) => {
 app.get("/skategrounds/items",function(req,res){
 	res.render("items");
 });
-	db.query("SELECT * FROM Items",
-		function(err, result, rows, fields){
-			if(err) {throw err;
-			console.log("result: " + result);
-			return;
-		}
-	
-			rows.forEach((result, fields)=>{
-			console.log(result); 
-			})
-		});
+var query = db.query("SELECT * FROM Items");
+		
+query.on('error',(err)=>{
+	throw err;
+});
+
+query.on('fields', (fields)=>{
+	console.log(fields);
+});
+
+query.on('result', (row,res)=>{
+	console.log(row.item_name, row.item_desc, row.stock_quantity);
+});
+
+db.end((err)=>{
+	console.log("connection terminated");
+});
 //#####################################
 app.listen(process.env.PORT, process.env.IP, function(){
 		console.log("Skategrounds App has started!!!");
