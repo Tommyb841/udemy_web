@@ -10,8 +10,9 @@ const db = mysql.createConnection({
 	host: 'localhost',
 	user: 'root',
 	password: '@Sxc&SQL841',
-	database: 'Inventory'
+	database: 'Inventory_app'
 });
+
 
 //not sure what this does
 var bodyParser = require("body-parser");
@@ -69,28 +70,33 @@ app.get("/skategrounds/new",(req,res) => {
 });
 
 //######################################
+app.post("/skategrounds/items",(req,res)=>{
+	//get data from form
+	var item = req.body.add_item;
+	var srch = req.body.search_item;		
+	var sql = 'SELECT * FROM Items WHERE item_name = ?';
+	db.query(sql,[srch],(err,result)=>{
+		if (err) throw err;
+			res.send(result)
+	}) 
+})
 //this is trial database code
 
 app.get("/skategrounds/items",function(req,res){
 	res.render("items");
 });
-var query = db.query("SELECT * FROM Items");
-		
-query.on('error',(err)=>{
-	throw err;
-});
+//
+//query.on('fields', (fields)=>{
+	//console.log(fields);
+//});
 
-query.on('fields', (fields)=>{
-	console.log(fields);
-});
-
-query.on('result', (row,res)=>{
-	console.log(row.item_name, row.item_desc, row.stock_quantity);
-});
-
-db.end((err)=>{
-	console.log("connection terminated");
-});
+//query.on('result', (row,res)=>{
+//	console.log(row.item_name, row.item_desc, row.stock_quantity);
+//});
+//
+//db.end((err)=>{
+//	console.log("connection terminated");
+//});
 //#####################################
 app.listen(process.env.PORT, process.env.IP, function(){
 		console.log("Skategrounds App has started!!!");

@@ -2,6 +2,16 @@
 <%- include("partials/header") %>
 <div class="container">
 		<h1>Mysql connection</h1>
-
+		<form action="/skategrounds/items" method="POST" id="item_form">
+			<div class="form-row align-items-center">
+				<!--//input field to add item  -->
+				<input type="text" name="add_item" placeholder="add item">
+				<button class="btn btn-success" type="submit">add item</button>
+				<!--//input field to search item  -->
+				<input type="text" name="search_item" placeholder="search item">
+	<!-- 			// button to show all items -->
+				<button class="btn btn-success" type="submit" form="item_form">Search inventory</button>
+			</div>
+		</form>
 </div>
 <%- include("partials/footer") %>
