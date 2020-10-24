@@ -70,20 +70,33 @@ app.get("/skategrounds/new",(req,res) => {
 });
 
 //######################################
+var searched_item = [];
+
 app.post("/skategrounds/items",(req,res)=>{
 	//get data from form
 	var item = req.body.add_item;
 	var srch = req.body.search_item;		
 	var sql = 'SELECT * FROM Items WHERE item_name = ?';
-	db.query(sql,[srch],(err,result)=>{
-		if (err) throw err;
-			res.send(result)
-	}) 
-})
+	var sqlq = mysql.format(sql,srch);
+	var query1 = db.query('SELECT * FROM Items WHERE item_name = ?',srch);
+	
+	query1
+		.on('result',(row, res)=>{
+		console.log(mysql.format(row));
+		});
+
+	//console.log(sqlq);
+	//db.query(sqlq,(err,result,fields)=>{
+	//	if (err) throw err;
+	//	console.log(fields.item_name);
+	//	searched_item.push(mysql.format(result));
+	//	
+	//}) 
+});
 //this is trial database code
 
 app.get("/skategrounds/items",function(req,res){
-	res.render("items");
+	res.render("items",{searched_item: searched_item});
 });
 //
 //query.on('fields', (fields)=>{

@@ -14,4 +14,11 @@
 			</div>
 		</form>
 </div>
+<div class="row text-center" style type="display:flex; flex-wrap: wrap;">
+	<% searched_item.forEach(function(searched_item){ %>
+		<div class="col-m-3 col-sm-6">
+			<h5><%=searched_item%></h5>
+		</div>
+	<%}) %>
+</div>
 <%- include("partials/footer") %>
