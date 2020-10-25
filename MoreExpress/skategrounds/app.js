@@ -14,9 +14,7 @@ const db = mysql.createConnection({
 });
 
 
-//not sure what this does
-var bodyParser = require("body-parser");
-//not sure what this does
+const bodyParser = require("body-parser");
 const axios = require('axios');
 
 //connection to database
@@ -79,10 +77,13 @@ app.post("/skategrounds/items",(req,res)=>{
 	var sql = 'SELECT * FROM Items WHERE item_name = ?';
 	var sqlq = mysql.format(sql,srch);
 	var query1 = db.query('SELECT * FROM Items WHERE item_name = ?',srch);
+	var query2 = db.query('SELECT * FROM Items ');
 	
-	query1
+	query2
 		.on('result',(row, res)=>{
-		console.log(mysql.format(row));
+		var find = [row.item_name, row.item_desc, row.stock_quantity, row.vendor, row.item_id ];
+		searched_item.push(find);
+		console.log(mysql.format(row.item_desc));
 		});
 
 	//console.log(sqlq);
@@ -92,6 +93,7 @@ app.post("/skategrounds/items",(req,res)=>{
 	//	searched_item.push(mysql.format(result));
 	//	
 	//}) 
+	res.redirect("/skategrounds/items");
 });
 //this is trial database code
 
