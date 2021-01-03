@@ -1,0 +1,20 @@
+<!DOCTYPE HTML 5>	
+
+<% layout('/layouts/boilerplate')%>
+<div  class="container mt-3" id="spot display">
+	<div id="title">
+		<h1 ><%= spot.title%>	</h2>		
+		<div class="card" id="img">
+			 <img  src="<%= spot.image %>" class="img-thumbnail">
+		</div>
+		<div id="description">
+			<h4 type> <%= spot.description %></h4>
+		</div>
+	</div>
+	<div class="col-md-3">
+			<a  class="btn btn-primary" href="/skategrounds/<%=spot._id%>/edit">Edit Spot</a>
+			<form action="/skategrounds/<%=spot._id%>?_method=DELETE" method="POST" id="delForm">
+					<button class="btn btn-primary" action="delForm">Delete</button>
+			</form>
+	</div>
+</div>  

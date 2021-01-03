@@ -1,0 +1,22 @@
+<!DOCTYPE HTML>
+<% layout('/layouts/boilerplate')%>
+<div class="container mt-3">
+	<div class="row">
+		<h1>Edit <%= spot.title %></h1>
+	</div>
+	<form action="/skategrounds/<%=spot._id%>?_method=PUT" method="POST" id="form1">
+			<div>
+				<label class="form-label" for="title">Title</label>
+				<input class="form-control mb-2"type="text" name="skateground[title]" id="title" value="<%= spot.title%>">
+			</div>
+			<div>
+				<label class="form-label" for="description">Description</label>
+				<input class="form-control mb-2" type="text" name="skateground[description]" id="description" value="<%=spot.description%>">
+			</div>
+			<div>
+				<label class="form-label" for="image">Image</label>
+				<input class="form-control mb-2"type="text" name="skateground[image]" id="image"></br> 
+			</div>
+				<button type="submit" class="btn btn-success" form="form1">Submit!</button>
+	</form>
+</div>
