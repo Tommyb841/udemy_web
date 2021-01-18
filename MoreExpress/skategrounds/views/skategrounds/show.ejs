@@ -1,20 +1,28 @@
 <!DOCTYPE HTML 5>	
 
 <% layout('/layouts/boilerplate')%>
-<div  class="container mt-3" id="spot display">
-	<div id="title">
-		<h1 ><%= spot.title%>	</h2>		
-		<div class="card" id="img">
-			 <img  src="<%= spot.image %>" class="img-thumbnail">
-		</div>
-		<div id="description">
-			<h4 type> <%= spot.description %></h4>
+
+
+<div class="row mt-3" id="spot display">
+	<div class="col-6 offset-3" id="title">
+		<div class="card">
+			<img src="<%= spot.image %>" class="card-img-top">
+			<div class="card-body">
+				<h5 class="card-title"><%=spot.title %></h5>
+				<p class="card-text"><%=spot.description %></p>
+			</div>
+			<ul class="list-group list-group-flush">
+				<li class="list-group-item text-muted">Location N/A</li>
+			</ul>
+			<div class="card-body">
+				<a href="/skategrounds/<%=spot._id%>/edit" class="card-link btn btn-info">Edit</a>
+				<form class="d-inline" action="/skategrounds/<%=spot._id%>?_method=DELETE" method="POST" id="delForm">
+						<button class="btn btn-danger" action="delForm">Delete</button>
+				</form>
+			</div>
 		</div>
 	</div>
-	<div class="col-md-3">
-			<a  class="btn btn-primary" href="/skategrounds/<%=spot._id%>/edit">Edit Spot</a>
-			<form action="/skategrounds/<%=spot._id%>?_method=DELETE" method="POST" id="delForm">
-					<button class="btn btn-primary" action="delForm">Delete</button>
-			</form>
-	</div>
-</div>  
+</div>
+
+<!-- add location, border -->
+

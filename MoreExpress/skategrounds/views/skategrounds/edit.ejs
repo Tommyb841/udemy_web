@@ -1,22 +1,43 @@
-<!DOCTYPE HTML>
+<!DOCTYPE HTML 5>
 <% layout('/layouts/boilerplate')%>
 <div class="container mt-3">
 	<div class="row">
-		<h1>Edit <%= spot.title %></h1>
+		<h1>Edit - <%= spot.title %></h1>
 	</div>
-	<form action="/skategrounds/<%=spot._id%>?_method=PUT" method="POST" id="form1">
+	<form action="/skategrounds/<%=spot._id%>?_method=PUT" method="POST" id="form1" class="validated-form" novalidate>
 			<div>
 				<label class="form-label" for="title">Title</label>
-				<input class="form-control mb-2"type="text" name="skateground[title]" id="title" value="<%= spot.title%>">
-			</div>
-			<div>
-				<label class="form-label" for="description">Description</label>
-				<input class="form-control mb-2" type="text" name="skateground[description]" id="description" value="<%=spot.description%>">
+				<input class="form-control mb-2"type="text" name="skateground[title]" id="title" value="<%= spot.title%>" required>
 			</div>
 			<div>
 				<label class="form-label" for="image">Image</label>
-				<input class="form-control mb-2"type="text" name="skateground[image]" id="image"></br> 
+				<input class="form-control mb-2"type="text" name="skateground[image]" id="image" value="<%=spot.image %>" required></br> 
 			</div>
-				<button type="submit" class="btn btn-success" form="form1">Submit!</button>
+			<div>
+				<label class="form-label" for="description">Description</label>
+				<input class="form-control mb-2" type="text" name="skateground[description]" id="description" value="<%=spot.description%>" required>
+			</div>
+				<button type="submit" class="btn btn-primary" form="form1">Update Spot</button>
 	</form>
 </div>
+
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.getElementsByClassName('validated-form');
+    // Loop over them and prevent submission
+    const validation = Array.from(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>

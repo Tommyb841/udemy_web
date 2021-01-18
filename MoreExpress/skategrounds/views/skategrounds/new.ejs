@@ -1,25 +1,46 @@
 <!DOCTYPE HTML 5>
 <% layout('/layouts/boilerplate')%>
 
-<div class="container mt-3">
+<div class="container mt-3" id="inputForm">
 	<div class="row">
-		<h1 class="text-center">New Skateground</h1>
+		<h1 class="text-center">New Skate Ground</h1>
 			<div class="col-6 offset-3">
-				<form action="/skategrounds" method="POST" id="form1">
+				<form action="/skategrounds" method="POST" id="form1" class="validated-form "novalidate>
 					<div>
 						<label class="form-label" for="title">Title</label>
-						<input class="form-control mb-2"type="text" name="title" id="title">
+						<input class="form-control mb-2"type="text" name="skateground[title]" id="title" required>
+					</div>
+					<div>
+						<label class="form-label" for="image">Image Url</label>
+						<input class="form-control mb-2"type="text" name="skateground[image]" id="image" required></br> 
 					</div>
 					<div>
 						<label class="form-label" for="description">Description</label>
-						<input class="form-control mb-2" type="text" name="description" id="description">
+						<textarea class="form-control mb-2" type="text" name="skateground[description]" id="description" required></textarea>
 					</div>
-					<div>
-						<label class="form-label" for="image">Image</label>
-						<input class="form-control mb-2"type="text" name="image" id="image"></br> 
-					</div>
-						<button type="submit" class="btn btn-success" form="form1">Submit!</button>
+						<button type="submit" class="btn btn-primary" form="form1">Create</button>
 				</form>
 			</div>
 	</div>
 </div>
+
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    const forms = document.getElementsByClassName('validated-form');
+    // Loop over them and prevent submission
+    const validation = Array.from(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
