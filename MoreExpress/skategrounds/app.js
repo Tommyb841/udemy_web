@@ -3,7 +3,6 @@ var express = require('express');
 //Mysql dependancy
 var mysql = require('mysql');
 
-// creates a call to express
 const app = express();
 //creates a varible that will allow login/connection to a database.
 const db = mysql.createConnection({
@@ -112,7 +111,7 @@ app.get("/skategrounds/items",function(req,res){
 //db.end((err)=>{
 //	console.log("connection terminated");
 //});
-//#####################################
+lol
 app.listen(process.env.PORT, process.env.IP, function(){
 		console.log("Skategrounds App has started!!!");
 	});
