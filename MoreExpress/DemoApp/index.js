@@ -3,7 +3,6 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
-
 const Product = require('./models/product');
 const Farm = require('./models/farm');
 
@@ -22,7 +21,7 @@ app.set('view engine', 'ejs');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'))
-
+app.use('assets', express.static(path.join(__dirname + 'assets')))
 // Farm routes
 app.get('/', (req,res)=>{
 	res.send('You made it')
@@ -39,18 +38,18 @@ app.get('/farms', async	(req, res)=> {
 app.post('/farms', async (req, res) => {
     const newFarm = new Farm(req.body);
     await newFarm.save();
-		res.render(`/farms/${newFarm._id}`)
+		res.redirect(`/farms/${newFarm._id}`)
 })
 app.get('/farms/:id', async (req, res) => {
     const { id } = req.params;
-    const farm = await Farm.findById(id)
+    const farm = await Farm.findById(id).populate('products');
     res.render('farms/show', { farm, id })
 })
 
 app.get('/farms/:id/edit', async (req, res) => {
     const { id } = req.params;
     const farm = await Farm.findById(id);
-    res.render('farms/edit', { farm })
+		res.render('farms/edit', { farm })
 })
 
 app.delete('/farms/:id', async (req, res) => {
@@ -59,6 +58,7 @@ app.delete('/farms/:id', async (req, res) => {
     res.redirect('/farms');
 })
 
+//new product for a farm 
 app.get('/farms/:id/products/new', (req, res) => {
 		const {id} = req.params;
     res.render('products/new', { categories, id })
@@ -73,11 +73,14 @@ app.post('/farms/:id/products', async (req, res) => {
 		product.farm = farm;
 	  await farm.save();
 	  await product.save();
-		res.send(farm)
-		
-//    res.redirect(`/products/${newProduct._id}`)
+    res.redirect(`/farms/${id}`)
 })
-
+//delete products from farms
+app.delete('/farms/:id/product', async req,res) => 
+		const {id} = req.params;
+		const deletedProduct = await Farm.p
+    res.render('farms/:id')
+})
 // product routes
 const categories = ['fruit', 'vegetable', 'dairy'];
 

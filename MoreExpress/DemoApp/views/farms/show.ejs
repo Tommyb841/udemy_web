@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="demo.css" type=css" media="screen" charset="utf-8">
     <title><%= farm.name %></title>
 </head>
 
@@ -12,8 +13,22 @@
     <ul>
         <li>City: <%= farm.city%></li>
         <li>Email: <%= farm.email %></li>
-				<li><%=id %></li> 
+				<li>Farm Id: <%=id %></li> 
     </ul>
+		<table>
+			<tr>
+				<td>Name</td>
+				<td>Price</td>
+				<td>Category</td>
+			</tr>
+			<%for (let product of farm.products){ %>
+			<tr>
+				<td><%= product.name%></td>
+				<td>$<%= product.price%></td>
+				<td><%= product.category%></td>
+			</tr>
+			<%} %>	
+		</table>
     <a href="/farms">All Farms</a>
     <a href="/farms/<%=farm._id%>/edit">Edit Farm</a>
     <a href="/farms/<%=id%>/products/new">Add Product</a>
