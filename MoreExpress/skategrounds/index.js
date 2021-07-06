@@ -4,10 +4,11 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-const { skategroundSchema } = require('./schemas.js')
+const { skategroundSchema, reviewSchema } = require('./schemas.js')
 const Skateground = require('./models/skategrounds');
 const catchAsync = require('./utilities/catchAsync');
 const ExpressError = require('./utilities/ExpressError'); 
+const Review = require('./models/reviews');
 //Mongodb connection
 mongoose.connect('mongodb://localhost:27017/skategrounds', { 
 	useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
@@ -37,6 +38,15 @@ const validateSkateground = (req,res, next) => {
 		next();
 	}
 }
+const validateReview = (req, res, next) => {
+	const {error} = reviewSchema.validate(req.body)
+	if (error) {
+		const msg = error.details.map(el => el.message).join(',')
+		throw new ExpressError(msg,404)
+	} else {
+		next();
+	}
+}
 //App get, post, delete, put functions
 app.get('/', (req,res) => {
 	res.render('landing')
@@ -53,7 +63,7 @@ app.get('/skategrounds/new', catchAsync( async (req,res) => {
 
 app.get('/skategrounds/:id', catchAsync( async (req,res) => {
 	const { id } = req.params;
-	const spot = await Skateground.findById(id)
+	const spot = await Skateground.findById(req.params.id).populate('reviews')
 	res.render('skategrounds/show', {spot})
 }))
 
@@ -83,6 +93,23 @@ app.get('/errPage', (err, req, res) => {
 	console.log('got this page lol ')
 })   
 
+app.post('/skategrounds/:id/reviews',validateReview,  catchAsync(async (req,res) =>{
+	const spot = await Skateground.findById(req.params.id);
+	const review = new Review(req.body.review);
+	spot.reviews.push(review);
+	await review.save();
+	await spot.save();
+	res.redirect(`/skategrounds/${spot._id}`);
+}))
+
+app.delete('/skategrounds/:id/reviews/:reviewId', catchAsync( async (req,res) =>{
+	const {id, reviewId} = req.params;
+	await Skateground.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
+	await Review.findByIdAndDelete(reviewId);
+	res.redirect(`/skategrounds/${id}`)
+}))
+
+
 app.put('/skategrounds/:id', validateSkateground, catchAsync( async(req,res) => {
 	const { id } = req.params;
 	const spot = await Skateground.findByIdAndUpdate(id, req.body.skateground, {runValidators: true, new: true});
@@ -103,4 +130,4 @@ app.use(( err, req, res, next) => {
 app.listen(3000, () => {
 	console.log("app is listening on port 3000!")
 })
-
+ 
