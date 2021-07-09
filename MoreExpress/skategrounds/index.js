@@ -4,13 +4,11 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-const { skategroundSchema, reviewSchema } = require('./schemas.js')
-const Skateground = require('./models/skategrounds');
+const { skategroundSchema, reviewSchema } = require('./schemas.js');
 const catchAsync = require('./utilities/catchAsync');
 const ExpressError = require('./utilities/ExpressError'); 
-const Review = require('./models/reviews');
 const skategrounds = require('./routes/skategrounds');
-
+const reviews = require('./routes/reviews');
 //Mongodb connection
 mongoose.connect('mongodb://localhost:27017/skategrounds', { 
 	useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
@@ -31,10 +29,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(methodOverride("_method"))
 app.use(express.urlencoded({ extended: true}))
 
-
-
 app.use('/skategrounds', skategrounds)
-
+app.use('/skategrounds/:id/reviews', reviews)
 //App get, post, delete, put functions
 app.get('/', (req,res) => {
 	res.render('landing')
@@ -48,6 +44,7 @@ app.use(( err, req, res, next) => {
   const { statusCode = 500 } = err;
 	if (!err.message) err.message = 'Oh No, Something Went Wrong!'
   res.status(statusCode).render('errPage', {err});
+	console.log('this is what you are getting')
 })
 
 app.get('/errPage', (err, req, res) => {
@@ -59,4 +56,4 @@ app.get('/errPage', (err, req, res) => {
 app.listen(3000, () => {
 	console.log("app is listening on port 3000!")
 })
- 
+//fuck this  
