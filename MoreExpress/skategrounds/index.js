@@ -9,6 +9,7 @@ const catchAsync = require('./utilities/catchAsync');
 const ExpressError = require('./utilities/ExpressError'); 
 const skategrounds = require('./routes/skategrounds');
 const reviews = require('./routes/reviews');
+
 //Mongodb connection
 mongoose.connect('mongodb://localhost:27017/skategrounds', { 
 	useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
@@ -20,8 +21,8 @@ mongoose.connect('mongodb://localhost:27017/skategrounds', {
 		console.log(err)
 	})
 
+//App - ejs, view engine, views, methodOverride, urlendcoded
 const app = express();
-//App engine,set,and use
 app.engine('ejs',ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -29,13 +30,16 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(methodOverride("_method"))
 app.use(express.urlencoded({ extended: true}))
 
+// Routers
 app.use('/skategrounds', skategrounds)
 app.use('/skategrounds/:id/reviews', reviews)
-//App get, post, delete, put functions
+
+//landing page route
 app.get('/', (req,res) => {
 	res.render('landing')
 })
 
+//error handling
 app.all('*', (req, res, next) => {
   next(new ExpressError('Page Not Found', 404))
 })
@@ -53,7 +57,8 @@ app.get('/errPage', (err, req, res) => {
 	console.log('got this page lol ')
 }) 
 
+
+// localhost port
 app.listen(3000, () => {
 	console.log("app is listening on port 3000!")
 })
-//fuck this  
