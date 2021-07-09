@@ -58,22 +58,6 @@ router.get('/:id/edit', catchAsync( async(req,res) => {
 	res.render('skategrounds/edit', {spot})
 }))
 
-router.post('/:id/reviews',validateReview,  catchAsync(async (req,res) =>{
-	const spot = await Skateground.findById(req.params.id);
-	const review = new Review(req.body.review);
-	spot.reviews.push(review);
-	await review.save();
-	await spot.save();
-	res.redirect(`/skategrounds/${spot._id}`);
-}))
-
-router.delete('/:id/reviews/:reviewId', catchAsync( async (req,res) =>{
-	const {id, reviewId} = req.params;
-	await Skateground.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
-	await Review.findByIdAndDelete(reviewId);
-	res.redirect(`/skategrounds/${id}`)
-}))
-
 
 router.put('/:id', validateSkateground, catchAsync( async(req,res) => {
 	const { id } = req.params;
