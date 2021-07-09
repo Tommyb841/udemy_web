@@ -6,6 +6,8 @@ const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
 const { skategroundSchema, reviewSchema } = require('./schemas.js');
 const catchAsync = require('./utilities/catchAsync');
+const session = require('express-session');
+const flash = require('connect-flash');
 const ExpressError = require('./utilities/ExpressError'); 
 const skategrounds = require('./routes/skategrounds');
 const reviews = require('./routes/reviews');
@@ -30,9 +32,31 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(methodOverride("_method"))
 app.use(express.urlencoded({ extended: true}))
 
+//Session configuration 
+const sessionConfig = {
+	secret: 'Thisshouldbeabettersecret',
+	resave: false,
+	saveUninitialized: true,
+	cookie: {
+		httpOnly: true,
+		expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+		maxAge: 1000 * 60 * 60 * 24 * 7,
+	}
+}
+
+app.use(session(sessionConfig));
+app.use(flash());
+
+//Flash middleware
+app.use((req,res,next) => {
+	res.locals.success = req.flash('success');
+	next();
+})
+
 // Routers
 app.use('/skategrounds', skategrounds)
 app.use('/skategrounds/:id/reviews', reviews)
+app.use(express.static(path.join(__dirname, 'public')))
 
 //landing page route
 app.get('/', (req,res) => {
@@ -48,7 +72,6 @@ app.use(( err, req, res, next) => {
   const { statusCode = 500 } = err;
 	if (!err.message) err.message = 'Oh No, Something Went Wrong!'
   res.status(statusCode).render('errPage', {err});
-	console.log('this is what you are getting')
 })
 
 app.get('/errPage', (err, req, res) => {
@@ -56,7 +79,6 @@ app.get('/errPage', (err, req, res) => {
   res.render('errPage', {err});
 	console.log('got this page lol ')
 }) 
-
 
 // localhost port
 app.listen(3000, () => {

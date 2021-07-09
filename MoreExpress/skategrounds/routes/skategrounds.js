@@ -43,12 +43,14 @@ router.post('/',validateSkateground, catchAsync( async (req, res, next) => {
 //		if(!req.body.skateground) throw new ExpressError('Invalid skateground data', 400);
     const skateground = new Skateground(req.body.skateground);
     await skateground.save();
+		req.flash('success', 'You have created a new skate spot');
     res.redirect(`/skategrounds/${skateground._id}`)
 }))
 
 router.delete('/:id', catchAsync( async (req,res) => {
 		const { id } = req.params;
 		const del = await Skateground.findByIdAndDelete(id);
+		req.flash('success', 'You have deleted a skate spot');
 		res.redirect('/skategrounds')
 
 }))
