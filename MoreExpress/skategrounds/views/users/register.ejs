@@ -1,0 +1,25 @@
+<!DOCTYPE HTML 5>
+<% layout('/layouts/boilerplate')%>
+
+<div class="container mt-3" id="inputForm">
+ <div class="row">
+  <h1 class="text-center">Register</h1>
+   <div class="col-6 offset-3">
+    <form action="/register" method="POST" id="register" class="validated-form" novalidate>
+     <div>
+      <label class="form-label" for="username">Username</label>
+      <input class="form-control mb-2"type="text" name="username" id="username" required>
+     </div>
+     <div>
+      <label class="form-label" for="email">Email</label>
+      <input class="form-control mb-2"type="email" name="email" id="email" required></br>
+     </div>
+     <div>
+      <label class="form-label" for="password">Password</label>
+      <textarea class="form-control mb-2" type="password" name="password" id="password" required></textarea>
+     </div>
+      <button type="submit" class="btn btn-primary" form="register">Register</button>
+    </form>
+   </div>
+ </div>
+</div>
