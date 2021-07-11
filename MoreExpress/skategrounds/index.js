@@ -32,7 +32,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(methodOverride("_method"))
 app.use(express.urlencoded({ extended: true}))
 
-//Session configuration 
+//Session configuration, flash configs 
 const sessionConfig = {
 	secret: 'Thisshouldbeabettersecret',
 	resave: false,
@@ -50,6 +50,7 @@ app.use(flash());
 //Flash middleware
 app.use((req,res,next) => {
 	res.locals.success = req.flash('success');
+	res.locals.error = req.flash('error');
 	next();
 })
 
