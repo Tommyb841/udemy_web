@@ -9,8 +9,12 @@ const catchAsync = require('./utilities/catchAsync');
 const session = require('express-session');
 const flash = require('connect-flash');
 const ExpressError = require('./utilities/ExpressError'); 
-const skategrounds = require('./routes/skategrounds');
-const reviews = require('./routes/reviews');
+const skategroundsRoutes = require('./routes/skategrounds');
+const reviewsRoutes = require('./routes/reviews');
+const userRoutes = require('./routes/user');
+const passport = require('passport');
+const LocalStrategy = require('passport-local');
+const User = require('./models/user')
 
 //Mongodb connection
 mongoose.connect('mongodb://localhost:27017/skategrounds', { 
@@ -46,6 +50,13 @@ const sessionConfig = {
 
 app.use(session(sessionConfig));
 app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 //Flash middleware
 app.use((req,res,next) => {
@@ -55,8 +66,9 @@ app.use((req,res,next) => {
 })
 
 // Routers
-app.use('/skategrounds', skategrounds)
-app.use('/skategrounds/:id/reviews', reviews)
+app.use('/', userRoutes)
+app.use('/skategrounds', skategroundsRoutes)
+app.use('/skategrounds/:id/reviews', reviewsRoutes)
 app.use(express.static(path.join(__dirname, 'public')))
 
 //landing page route
