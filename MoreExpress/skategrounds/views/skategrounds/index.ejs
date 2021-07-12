@@ -3,20 +3,20 @@
 <%layout('/layouts/boilerplate')%>
 
 <div class="container">
-	<div class="text-center mt-3 rounded-pill">
+	<div class="text-center mt-3 rounded-pill" id="header">
 		<h1>Welcome To SkateGrounds</h1>  
 		<h2>Check out these spots</h2>
 	</div>
 		 <% for (let spot of  spots) {%>
-		 <div class="card mb-2">
+		 <div class="card mb-6 rounded-pill" id="spotCard">
 				<div class="row">
 						<div class="col-md-4">
-							<a href="/skategrounds/<%= spot.id %>"><img class="img-fluid" src="<%= spot.image%>"></a>
+							<a href="/skategrounds/<%= spot.id %>"><img class="img-fluid rounded-pill " id="spotImg" src="<%= spot.image%>"></a>
 						</div>
 						<div class="col-md-8">
 								<div class="card-body">
-									<h5 class="card-title"><a href="/skategrounds/<%= spot.id %>"><%=spot.title %></a></h5>
-									<p class="card-text"><%= spot.description %></p>
+									<h5 class="card-title" id="title"><a href="/skategrounds/<%= spot.id %>"><%=spot.title %></a></h5>
+									<p class="card-text" id="description"><%= spot.description %></p>
 								</div>
 						</div>
 				</div>

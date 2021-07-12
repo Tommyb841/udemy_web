@@ -29,12 +29,14 @@ mongoose.connect('mongodb://localhost:27017/skategrounds', {
 
 //App - ejs, view engine, views, methodOverride, urlendcoded
 const app = express();
+
 app.engine('ejs',ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.use(methodOverride("_method"))
-app.use(express.urlencoded({ extended: true}))
+app.use(methodOverride("_method"));
+app.use(express.urlencoded({ extended: true}));
+app.use(express.static(path.join(__dirname, 'public')));
 
 //Session configuration, flash configs 
 const sessionConfig = {
@@ -69,7 +71,6 @@ app.use((req,res,next) => {
 app.use('/', userRoutes)
 app.use('/skategrounds', skategroundsRoutes)
 app.use('/skategrounds/:id/reviews', reviewsRoutes)
-app.use(express.static(path.join(__dirname, 'public')))
 
 //landing page route
 app.get('/', (req,res) => {

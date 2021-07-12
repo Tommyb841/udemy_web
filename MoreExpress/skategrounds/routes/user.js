@@ -14,13 +14,16 @@ router.get('/register', (req, res) => {
 
 //rout to save user
 router.post('/register', catchAsync( async (req, res, next) => {
-	console.log(req.body)
-	const {email, username, password } = req.body;
-  const user = new User({ email, username });
-	const registeredUser = await User.register(user, password);
-  await user.save();
-
-	req.flash('success', 'You have created a new user');
-  res.redirect(`/skategrounds`)
+	try	{
+		const {email, username, password } = req.body;
+		const user = new User({ email, username });
+		const registeredUser = await User.register(user, password);
+		await user.save();
+		req.flash('success', 'You have created a new user');
+		res.redirect(`/skategrounds`)
+	}catch(e){
+		req.flash('error', 'Invalid entry!');
+		res.redirect('/register');
+	}
 }))
 module.exports = router;
