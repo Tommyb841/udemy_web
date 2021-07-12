@@ -4,8 +4,8 @@ const router = express.Router();
 const catchAsync = require('../utilities/catchAsync');
 const ExpressError = require('../utilities/ExpressError'); 
 const { skategroundSchema, reviewSchema } = require('../schemas.js')
-const Skateground = require('../models/skategrounds');
-
+const Skateground = require('../models/skategrounds'); 
+const { isLoggedIn } = require('../middleware');
 //skateground validation 
 const validateSkateground = (req,res, next) => {
 	const { error } = skategroundSchema.validate(req.body);
@@ -24,14 +24,15 @@ router.get('/', catchAsync( async (req,res) => {
 }))
 
 //route to new skatespot page
-router.get('/new', catchAsync( async (req,res) => {
+router.get('/new', isLoggedIn, (req, res) => {
 	res.render('skategrounds/new')
-}))
+});
 
 //route to display single skate spot page
 router.get('/:id', catchAsync( async (req,res) => {
 //	const { id } = req.params;
-	const spot = await Skateground.findById(req.params.id).populate('reviews')
+	const spot = await Skateground.findById(req.params.id).populate('reviews').populate('author')
+	console.log(spot.author.username);
 	if (!spot) {
 		req.flash('error', 'Cannot find that spot!');
 		return res.redirect('/skategrounds');
@@ -40,15 +41,16 @@ router.get('/:id', catchAsync( async (req,res) => {
 }))
 
 //this saves the new skatespot
-router.post('/',validateSkateground, catchAsync( async (req, res, next) => {
+router.post('/', isLoggedIn, validateSkateground, catchAsync( async (req, res, next) => {
     const skateground = new Skateground(req.body.skateground);
+		skateground.author = req.user._id;
     await skateground.save();
 		req.flash('success', 'You have created a new skate spot');
     res.redirect(`/skategrounds/${skateground._id}`)
 }))
 
 //this deletes the skatespot
-router.delete('/:id', catchAsync( async (req,res) => {
+router.delete('/:id', isLoggedIn,  catchAsync( async (req,res) => {
 		const { id } = req.params;
 		const del = await Skateground.findByIdAndDelete(id);
 		req.flash('success', 'You have deleted a skate spot');
@@ -56,7 +58,7 @@ router.delete('/:id', catchAsync( async (req,res) => {
 }))
 
 //this is to edit the skate spot
-router.get('/:id/edit', catchAsync( async(req,res) => {
+router.get('/:id/edit', isLoggedIn,  catchAsync( async(req,res) => {
 	const { id } = req.params;
 	const spot = await Skateground.findById(id)
 	res.render('skategrounds/edit', {spot})

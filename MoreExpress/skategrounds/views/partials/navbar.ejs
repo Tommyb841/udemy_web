@@ -10,17 +10,32 @@
 				</button>		
 			<!-- Navbar links -->
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+            <div class="navbar-nav">
+                <a class="nav-link" href="/">Home</a>
+                <a class="nav-link" href="/skategrounds">Skategrounds</a>
+                <a class="nav-link" href="/skategrounds/new">New</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <% if(!currentUser) {%>
+                <a class="nav-link active" href="/login">Login</a>
+                <a class="nav-link active" href="/register">Register</a>
+                <% } else {%>
+                <a class="nav-link active" href="/logout">Logout</a>
+                <% } %>
+            </div>
+			 </div>
+	<!-- <div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
 					<li class="nav-item">
-						<a href="/register"class="nav-link active" aria-current="page" href="#">Login</a>
+						<a href="/login" class="nav-link active" aria-current="page">Login</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="#">Sign Up</a>
+						<a href="/register" class="nav-link active">Register</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link active" href="#">Logout</a>
+						<a class="nav-link active" href="/logout">Logout</a>
 					</li>
 				</ul>
-			</div>
+			</div> -->
 		</div>
 	</nav>	

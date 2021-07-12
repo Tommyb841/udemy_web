@@ -10,6 +10,9 @@ img {
   width:  200px;
   height: 300px;
 }
+#cardCont {
+	max-width: 960px ;
+}
 #title {
 	text-align: center;
 }
@@ -17,11 +20,14 @@ img {
 	text-align: center;
 }
 #spotCard {
+	position: centered;
 	margin-bottom: 30px;
   border: 3px solid #ddd;
   box-shadow: 10px 10px grey;
 }
 #spotImg {
+	float: align-self-centered;
+	left: 15px;
   width: 13rem;
   height: 7rem;
   

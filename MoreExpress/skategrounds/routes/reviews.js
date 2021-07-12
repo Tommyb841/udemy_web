@@ -1,12 +1,11 @@
+//app requirements
 const express = require('express');
 const router = express.Router({ mergeParams: true });
-
 const Skateground = require('../models/skategrounds');
 const Review = require('../models/reviews');
-
 const { reviewSchema } = require('../schemas.js');
-
 const catchAsync = require('../utilities/catchAsync');
+const { isLoggedIn } = require('../middleware');
 const ExpressError = require('../utilities/ExpressError'); 
 //validateReview
 const validateReview = (req, res, next) => {
@@ -19,7 +18,8 @@ const validateReview = (req, res, next) => {
 	}
 }
 
-router.post('/',validateReview,  catchAsync(async (req,res) =>{
+//Saves review
+router.post('/', isLoggedIn, validateReview,  catchAsync(async (req,res) =>{
 	const spot = await Skateground.findById(req.params.id);
 	const review = new Review(req.body.review);
 	spot.reviews.push(review);
@@ -28,7 +28,8 @@ router.post('/',validateReview,  catchAsync(async (req,res) =>{
 	res.redirect(`/skategrounds/${spot._id}`);
 }))
 
-router.delete('/:reviewId', catchAsync( async (req,res) =>{
+//Deletes review
+router.delete('/:reviewId', isLoggedIn, catchAsync( async (req,res) =>{
 	const {id, reviewId} = req.params;
 	await Skateground.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
 	await Review.findByIdAndDelete(reviewId);

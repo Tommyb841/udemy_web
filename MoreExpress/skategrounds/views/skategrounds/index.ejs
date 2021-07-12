@@ -2,16 +2,17 @@
 
 <%layout('/layouts/boilerplate')%>
 
-<div class="container">
-	<div class="text-center mt-3 rounded-pill" id="header">
+<div class="container" id="cardCont">
+	<div class="text-center mt-3" id="header">
 		<h1>Welcome To SkateGrounds</h1>  
 		<h2>Check out these spots</h2>
 	</div>
+	<div id="showIndex" class="m4 l3">
 		 <% for (let spot of  spots) {%>
-		 <div class="card mb-6 rounded-pill" id="spotCard">
+		 <div class="card mb-6 m6 l6" id="spotCard">
 				<div class="row">
-						<div class="col-md-4">
-							<a href="/skategrounds/<%= spot.id %>"><img class="img-fluid rounded-pill " id="spotImg" src="<%= spot.image%>"></a>
+						<div class="col-md-4 col-l-4">
+							<a href="/skategrounds/<%= spot.id %>"><img class="img-fluid " id="spotImg" src="<%= spot.image%>"></a>
 						</div>
 						<div class="col-md-8">
 								<div class="card-body">
@@ -22,6 +23,7 @@
 				</div>
 			</div>
 			<% } %>
+	</div>
 	<div class="mb-5"  id="buttons">
 		<a class="btn btn-success bt-lg" href="/skategrounds/new">Add New Skate Spot</a>
 		<a class="btn btn-success bt-lg" href="/skategrounds/errPage">err</a>

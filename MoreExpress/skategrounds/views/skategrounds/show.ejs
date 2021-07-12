@@ -3,7 +3,7 @@
 <% layout('/layouts/boilerplate')%>
 
 <!-- skateground display -->
-<link href="/stylesheets/skategrounds.css" rel="stylesheet">
+<!--  <link href="/stylesheets/skategrounds.css" rel="stylesheet">-->
 <success>
 <div class="row mt-3" id="spot display">
 	<div class="col-6" id="title">
@@ -15,6 +15,7 @@
 			</div>
 			<ul class="list-group list-group-flush">
 				<li class="list-group-item text-muted">Location N/A</li>
+				<p class="card-text">Created by: <%=spot.author.username%></p>
 			</ul>
 			<div class="card-body">
 				<a href="/skategrounds/<%=spot._id%>/edit" class="card-link btn btn-info">Edit</a>

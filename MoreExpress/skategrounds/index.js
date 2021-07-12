@@ -27,6 +27,7 @@ mongoose.connect('mongodb://localhost:27017/skategrounds', {
 		console.log(err)
 	})
 
+mongoose.set('useCreateIndex', true);
 //App - ejs, view engine, views, methodOverride, urlendcoded
 const app = express();
 
@@ -38,7 +39,7 @@ app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
-//Session configuration, flash configs 
+//Session configuration, flash configs ,passport
 const sessionConfig = {
 	secret: 'Thisshouldbeabettersecret',
 	resave: false,
@@ -62,6 +63,7 @@ passport.deserializeUser(User.deserializeUser());
 
 //Flash middleware
 app.use((req,res,next) => {
+	res.locals.currentUser = req.user;
 	res.locals.success = req.flash('success');
 	res.locals.error = req.flash('error');
 	next();
