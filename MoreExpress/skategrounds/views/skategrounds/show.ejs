@@ -17,12 +17,14 @@
 				<li class="list-group-item text-muted">Location N/A</li>
 				<p class="card-text">Created by: <%=spot.author.username%></p>
 			</ul>
-			<div class="card-body">
+			<% if (currentUser && spot.author.equals(currentUser._id)){ %>
+			<div class="card-body" id="shw_crd_bttns">
 				<a href="/skategrounds/<%=spot._id%>/edit" class="card-link btn btn-info">Edit</a>
 				<form class="d-inline" action="/skategrounds/<%=spot._id%>?_method=DELETE" method="POST" id="delForm">
 						<button class="btn btn-danger" action="delForm">Delete</button>
 				</form>
 			</div>
+			<% }%>
 		</div>
 	</div>
 	<!-- review -->
