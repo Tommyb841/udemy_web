@@ -28,6 +28,7 @@ mongoose.connect('mongodb://localhost:27017/skategrounds', {
 	})
 
 mongoose.set('useCreateIndex', true);
+
 //App - ejs, view engine, views, methodOverride, urlendcoded
 const app = express();
 
