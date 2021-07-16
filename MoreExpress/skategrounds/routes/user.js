@@ -13,7 +13,6 @@ router.get('/register', (req, res) => {
 	res.render('users/register');
 });
 
-
 // saves user
 router.post('/register', catchAsync( async (req, res, next) => {
 	try	{
@@ -36,7 +35,6 @@ router.post('/register', catchAsync( async (req, res, next) => {
 router.get('/login', (req, res) => {
 	res.render('users/login');
 });
-
 // authenticate login
 router.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}),(req, res) => {
 	req.flash('success', 'You have logged in');

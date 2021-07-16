@@ -1,5 +1,5 @@
 // app requirements
-const express = require('express');
+const express = require('express');//{{{
 const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
@@ -14,10 +14,10 @@ const reviewsRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/user');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const User = require('./models/user')
+const User = require('./models/user')//}}}
 
 //Mongodb connection
-mongoose.connect('mongodb://localhost:27017/skategrounds', { 
+mongoose.connect('mongodb://localhost:27017/skategrounds', { {{{
 	useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
 	.then(() => {
 		console.log("Mongo connection open")
@@ -26,11 +26,10 @@ mongoose.connect('mongodb://localhost:27017/skategrounds', {
 		console.log("connection error")
 		console.log(err)
 	})
-
-mongoose.set('useCreateIndex', true);
+mongoose.set('useCreateIndex', true);//}}}
 
 //App - ejs, view engine, views, methodOverride, urlendcoded
-const app = express();
+const app = express();//{{{
 
 app.engine('ejs',ejsMate);
 app.set('view engine', 'ejs');
@@ -38,10 +37,10 @@ app.set('views', path.join(__dirname, 'views'));
 
 app.use(methodOverride("_method"));
 app.use(express.urlencoded({ extended: true}));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));//}}}
 
 //Session configuration, flash configs ,passport
-const sessionConfig = {
+const sessionConfig = {//{{{
 	secret: 'Thisshouldbeabettersecret',
 	resave: false,
 	saveUninitialized: true,
@@ -60,28 +59,28 @@ app.use(passport.session());
 passport.use(new LocalStrategy(User.authenticate()));
 
 passport.serializeUser(User.serializeUser());
-passport.deserializeUser(User.deserializeUser());
+passport.deserializeUser(User.deserializeUser());//}}}
 
 //Flash middleware
-app.use((req,res,next) => {
+app.use((req,res,next) => {//{{{
 	res.locals.currentUser = req.user;
 	res.locals.success = req.flash('success');
 	res.locals.error = req.flash('error');
 	next();
-})
+})//}}}
 
 // Routers
-app.use('/', userRoutes)
+app.use('/', userRoutes)//{{{
 app.use('/skategrounds', skategroundsRoutes)
-app.use('/skategrounds/:id/reviews', reviewsRoutes)
+app.use('/skategrounds/:id/reviews', reviewsRoutes)//}}}
 
 //landing page route
-app.get('/', (req,res) => {
+app.get('/', (req,res) => {//{{{
 	res.render('landing')
-})
+})//}}}
 
 //error handling
-app.all('*', (req, res, next) => {
+app.all('*', (req, res, next) => {//{{{
   next(new ExpressError('Page Not Found', 404))
 })
 
@@ -95,9 +94,9 @@ app.get('/errPage', (err, req, res) => {
 	if (!err.message) err.message = 'Oh No, Something Went Wrong!'
   res.render('errPage', {err});
 	console.log('got this page lol ')
-}) 
+}) //}}}
 
 // localhost port
-app.listen(3000, () => {
+app.listen(3000, () => {//{{{
 	console.log("app is listening on port 3000!")
-})
+})//}}}
