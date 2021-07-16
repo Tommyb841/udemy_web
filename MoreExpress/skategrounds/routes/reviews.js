@@ -10,16 +10,19 @@ const ExpressError = require('../utilities/ExpressError');
 
 //Saves review
 router.post('/', isLoggedIn, validateReview,  catchAsync(async (req,res) =>{
-	const spot = await Skateground.findById(req.params.id);
+	const { id } = req.params;
+	const spot = await Skateground.findById(id);
 	const review = new Review(req.body.review);
+	review.author = req.user._id;
 	spot.reviews.push(review);
 	await review.save();
 	await spot.save();
-	res.redirect(`/skategrounds/${spot._id}`);
+	req.flash('success', 'Created a new review');
+	res.redirect(`/skategrounds/${id}`);
 }))
 
 //Deletes review
-router.delete('/:reviewId', isLoggedIn, catchAsync( async (req,res) =>{
+router.delete('/:reviewId', isLoggedIn, isAuthor, catchAsync( async (req,res) =>{
 	const {id, reviewId} = req.params;
 	await Skateground.findByIdAndUpdate(id, {$pull: {reviews: reviewId}});
 	await Review.findByIdAndDelete(reviewId);

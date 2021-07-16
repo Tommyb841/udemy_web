@@ -21,8 +21,12 @@ router.get('/new', isLoggedIn, (req, res) => {
 //route to display single skate spot page
 router.get('/:id', catchAsync( async (req,res) => {
 	const { id } = req.params;
-	const spot = await Skateground.findById(id).populate('reviews').populate('author')
-	console.log(spot.author.username);
+	const spot = await Skateground.findById(id).populate ({
+	path: 'reviews',
+        populate: {
+            path: 'author'
+        }
+	}).populate('author');
 	if (!spot) {
 		req.flash('error', 'Cannot find that spot!');
 		return res.redirect('/skategrounds');
@@ -40,7 +44,7 @@ router.post('/', isLoggedIn, validateSkateground, catchAsync( async (req, res, n
 }))
 
 //this deletes the skatespot
-router.delete('/:id', isLoggedIn,  catchAsync( async (req,res) => {
+router.delete('/:id', isLoggedIn, isAuthor,  catchAsync( async (req,res) => {
 		const { id } = req.params;
 		const del = await Skateground.findByIdAndDelete(id);
 		req.flash('success', 'You have deleted a skate spot');
