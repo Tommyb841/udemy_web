@@ -1,19 +1,20 @@
-<!DOCTYPE HTML 5>
+<!DOCTYPE HTML 6>
 <% layout('/layouts/boilerplate')%>
 
 <div class="container mt-3" id="inputForm">
 	<div class="row">
 		<h1 class="text-center">New Skate Ground</h1>
 			<div class="col-6 offset-3">
-				<form action="/skategrounds" method="POST" id="form1" class="validated-form "novalidate>
+				<form action="/skategrounds" method="POST" id="form1" class="validated-form "novalidate enctype="multipart/form-data">
 					<div>
 						<label class="form-label" for="title">Title</label>
 						<input class="form-control mb-2"type="text" name="skateground[title]" id="title" required>
 					</div>
-					<div>
+					<input type="file" name="image" multiple>
+				<!--	<div>
 						<label class="form-label" for="image">Image Url</label>
 						<input class="form-control mb-2"type="text" name="skateground[image]" id="image" required></br> 
-					</div>
+				</div>-->
 					<div>
 						<label class="form-label" for="description">Description</label>
 						<textarea class="form-control mb-2" type="text" name="skateground[description]" id="description" required></textarea>
