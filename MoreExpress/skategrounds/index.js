@@ -1,3 +1,8 @@
+
+if (process.env.NODE_ENV !== "production"){
+	require('dotenv').config();
+}
+
 // app requirements
 const express = require('express');//{{{
 const path = require('path');
@@ -17,7 +22,7 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user')//}}}
 
 //Mongodb connection
-mongoose.connect('mongodb://localhost:27017/skategrounds', { {{{
+mongoose.connect('mongodb://localhost:27017/skategrounds', { //{{{
 	useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
 	.then(() => {
 		console.log("Mongo connection open")
