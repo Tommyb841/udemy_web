@@ -11,14 +11,11 @@ const { isLoggedIn , isAuthor , validateSkateground } = require('../middleware')
 const multer = require('multer');
 const { storage } = require('../cloudinary');
 const upload = multer({ storage });
+
 //route to index page
 router.route('/')
 	.get(skateground.index)
-	//.post( isLoggedIn, validateSkateground, skateground.save);
-	.post(upload.array('image'),(req,res) => {
-		console.log(req.body, req.files);
-		res.send('it yes');
-	})
+	.post( isLoggedIn, upload.array('image'), validateSkateground,  skateground.save);
 
 //route to new skatespot page
 router.get('/new', isLoggedIn, skateground.newForm);
@@ -27,11 +24,10 @@ router.get('/new', isLoggedIn, skateground.newForm);
 router.route('/:id')
 	.get(skateground.spotDisplay)
 	.delete(isLoggedIn, isAuthor, skateground.spotDelete)
-	.put( isLoggedIn, isAuthor, validateSkateground, skateground.saveEdit);
+	.put( isLoggedIn, isAuthor, upload.array('image'), validateSkateground, skateground.saveEdit);
 
 //this is to edit the skate spot
 router.get('/:id/edit', isLoggedIn, isAuthor, skateground.spotEdit);
 
-//this saves the changes of the edit
 
 module.exports = router;

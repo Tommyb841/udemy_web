@@ -1,22 +1,33 @@
 const mongoose = require('mongoose');
 const Review = require('./reviews');
 const Schema = mongoose.Schema;
+const Attribute = require('./attributes')
+const ImageSchema = new Schema({
+    url: String,
+    filename: String
+});
 
 const spotSchema = new Schema({
 	title: String, 
-	image: String,
+	image:[ImageSchema],  
 	description: String, 
 	location: String,
 	author:{
 		type: Schema.Types.ObjectId,
 		ref: 'User'
 	},
+	attributes: [
+		{
+			type: Schema.Types.ObjectId,
+			ref: 'Attribute'
+		}
+	],
 	reviews: [
 		{ 
 			type: Schema.Types.ObjectId,
 			ref: 'Review' 
 		}
-	]	
+	],	
 });
 
 spotSchema.post('findOneAndDelete', async function(doc) {
