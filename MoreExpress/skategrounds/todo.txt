@@ -1,0 +1,2 @@
+1. make atrributes schema based from reviews schema . check validations and that it is imported where need be.
+the atrributes will be disokayed from the mongo db and added to the skatespot.
