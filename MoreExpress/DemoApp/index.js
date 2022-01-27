@@ -76,7 +76,7 @@ app.post('/farms/:id/products', async (req, res) => {
     res.redirect(`/farms/${id}`)
 })
 //delete products from farms
-app.delete('/farms/:id/product', async req,res) => 
+app.delete('/farms/:id/product', async (req, res) => { 
 		const {id} = req.params;
 		const deletedProduct = await Farm.p
     res.render('farms/:id')
