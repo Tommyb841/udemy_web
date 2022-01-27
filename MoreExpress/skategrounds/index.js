@@ -9,12 +9,13 @@ const path = require('path');
 const mongoose = require('mongoose');
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate');
-const { skategroundSchema, reviewSchema } = require('./schemas.js');
+const { skategroundSchema, reviewSchema, attributeSchema } = require('./schemas.js');
 const catchAsync = require('./utilities/catchAsync');
 const session = require('express-session');
 const flash = require('connect-flash');
 const ExpressError = require('./utilities/ExpressError'); 
 const skategroundsRoutes = require('./routes/skategrounds');
+const attributesRoutes = require('./routes/attributes');
 const reviewsRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/user');
 const passport = require('passport');
@@ -23,7 +24,8 @@ const User = require('./models/user')//}}}
 
 //Mongodb connection
 mongoose.connect('mongodb://localhost:27017/skategrounds', { //{{{
-	useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+
+useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
 	.then(() => {
 		console.log("Mongo connection open")
 	})
@@ -31,6 +33,7 @@ mongoose.connect('mongodb://localhost:27017/skategrounds', { //{{{
 		console.log("connection error")
 		console.log(err)
 	})
+
 mongoose.set('useCreateIndex', true);//}}}
 
 //App - ejs, view engine, views, methodOverride, urlendcoded
@@ -78,6 +81,7 @@ app.use((req,res,next) => {//{{{
 app.use('/', userRoutes)//{{{
 app.use('/skategrounds', skategroundsRoutes)
 app.use('/skategrounds/:id/reviews', reviewsRoutes)//}}}
+app.use('/skategrounds/:id/attributes', attributesRoutes)
 
 //landing page route
 app.get('/', (req,res) => {//{{{
@@ -105,3 +109,4 @@ app.get('/errPage', (err, req, res) => {
 app.listen(3000, () => {//{{{
 	console.log("app is listening on port 3000!")
 })//}}}
+
