@@ -1,3 +1,5 @@
+
+//app requiremnets
 const catchAsync = require('../utilities/catchAsync');
 const Skateground = require('../models/skategrounds'); 
 const ExpressError = require('../utilities/ExpressError'); 
@@ -32,8 +34,10 @@ module.exports.spotDisplay = catchAsync( async (req,res) => {
 //Saves skatespot
 module.exports.save = catchAsync( async (req, res, next) => {
     const skateground = new Skateground(req.body.skateground);
+		skateground.image = req.files.map(f => ({ url: f.path, filename: f.filename }));
 		skateground.author = req.user._id;
     await skateground.save();
+	console.log(skateground)
 		req.flash('success', 'You have created a new skate spot');
     res.redirect(`/skategrounds/${skateground._id}`)
 })
@@ -57,6 +61,16 @@ module.exports.spotEdit =  catchAsync( async(req,res) => {
 module.exports.saveEdit = catchAsync( async(req,res) => {
 	const { id } = req.params;
 	const spot = await Skateground.findByIdAndUpdate(id, req.body.skateground, {runValidators: true, new: true});
+	const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    spot.image.push(...imgs);
+    await spot.save();
+    if (req.body.deleteImages) {
+        for (let filename of req.body.deleteImages) {
+            await cloudinary.uploader.destroy(filename);
+        }
+        await spot.updateOne({ $pull: { image: { filename: { $in: req.body.deleteImages } } } })
+    }
+  req.flash('success', 'Successfully updated campground!');
 	req.flash('success', "You have successfully updated the current skate spot.");
 	res.redirect(`/skategrounds/${spot._id}`);
 })
