@@ -7,14 +7,20 @@
 		<h1>Welcome To SkateGrounds</h1>  
 		<h2>Check out these spots</h2>
 	</div>
+		<!-- shows all skate spots -->
 	<div id="showIndex" class="m4 l3">
+		<!-- loops through cards to be dispayed  -->
 		 <% for (let spot of  spots) {%>
+			<!-- contains the row of skatespots -->
 		 <div class="card mb-6 m6 l6" id="spotCard">
 				<div class="row">
 						<div class="col-md-4 col-l-4">
-							<a href="/skategrounds/<%= spot.id %>"><img class="img-fluid " id="spotImg" src="<%= spot.image%>"></a>
+							<!-- picture that links to the skatespot page -->
+							<a href="/skategrounds/<%= spot.id %>"><img class="img-fluid " id="spotImg" src="<%= spot.image[0].url %>"></a>
 						</div>
+						<!-- 2nd column for skatespot -->
 						<div class="col-md-8">
+								<!-- holds the title that links to the skatespot  -->
 								<div class="card-body">
 									<h5 class="card-title" id="title"><a href="/skategrounds/<%= spot.id %>"><%=spot.title %></a></h5>
 									<p class="card-text" id="description"><%= spot.description %></p>
@@ -22,10 +28,12 @@
 						</div>
 				</div>
 			</div>
-			<% } %>
+			<%} %>
 	</div>
 	<div class="mb-5"  id="buttons">
+		<!-- links to add new skatespot page -->
 		<a class="btn btn-success bt-lg" href="/skategrounds/new">Add New Skate Spot</a>
+		<!-- links to errPage -->
 		<a class="btn btn-success bt-lg" href="/skategrounds/errPage">err</a>
 	</div>
 </div>

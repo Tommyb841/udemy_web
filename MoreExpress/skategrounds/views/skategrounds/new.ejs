@@ -10,17 +10,23 @@
 						<label class="form-label" for="title">Title</label>
 						<input class="form-control mb-2"type="text" name="skateground[title]" id="title" required>
 					</div>
-					<input type="file" name="image" multiple>
-				<!--	<div>
-						<label class="form-label" for="image">Image Url</label>
-						<input class="form-control mb-2"type="text" name="skateground[image]" id="image" required></br> 
-				</div>-->
+					<!-- this is the original file input -->
+					<!-- 	<input type="file" name="image" multiple> -->
+						<!-- this is the new file input -->
+						<div class="form-file">
+							<input type="file" class="form-file-input" id="image" name="image" multiple> 
+							<label class="form-file-label" for="image"> 
+								<span class="form-file-text"></span>
+								<span class="form-file-button" ></span>
+							</label>
+						</div>
 					<div>
 						<label class="form-label" for="description">Description</label>
-						<textarea class="form-control mb-2" type="text" name="skateground[description]" id="description" required></textarea>
+						<textarea class="form-control mb-2" type="text" name="skateground[description]"  id="description" required></textarea>
 					</div>
 						<button type="submit" class="btn btn-primary" form="form1">Create</button>
 				</form>
+			</div>
 			</div>
 	</div>
 </div>

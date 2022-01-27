@@ -1,22 +1,52 @@
 <!DOCTYPE HTML 5>
 <% layout('/layouts/boilerplate')%>
-<div class="container mt-3">
+<div class="container col-md-8 mt-4">
+	<div class="row mt-4" id="spot display">
+		<div class="col-6" id="title">
+			<div class="card">
+					<div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+						<div class="carousel-inner">
+							<% spot.image.forEach((img,i) => { %>
+									<div class="carousel-item <%= i === 0 ? 'active' : ''%>">
+										<img src="<%= img.url%>" class="d-block w-100" alt="">
+									</div>
+								<% }) %>
+								<% if (spot.image.length > 1) {%>
+									<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Previous</span>
+									</button>
+									<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="visually-hidden">Next</span>
+									</button>
+									<%} %>
+					</div>
 	<div class="row">
 		<h1>Edit - <%= spot.title %></h1>
 	</div>
-	<form action="/skategrounds/<%=spot._id%>?_method=PUT" method="POST" id="form1" class="validated-form" novalidate>
+	<form action="/skategrounds/<%=spot._id%>?_method=PUT" method="POST" id="form1" class="validated-form" novalidate enctype="multipart/form-data">
 			<div>
 				<label class="form-label" for="title">Title</label>
 				<input class="form-control mb-2"type="text" name="skateground[title]" id="title" value="<%= spot.title%>" required>
 			</div>
 			<div>
-				<label class="form-label" for="image">Image</label>
-				<input class="form-control mb-2"type="text" name="skateground[image]" id="image" value="<%=spot.image %>" required></br> 
-			</div>		
-			<div>
 				<label class="form-label" for="description">Description</label>
 				<input class="form-control mb-2" type="text" name="skateground[description]" id="description" value="<%=spot.description%>" required>
 			</div>
-				<button type="submit" class="btn btn-primary" form="form1">Update Spot</button>
+<!--  	<div class="form-file custom-file">
+					<label class="form-label" for="image">Images</label>
+					<input type="file" class="form-file-input btn btn-primary mb-2" id="image" name="image" multiple>
+			</div>
+-->
+				<div>
+					<label class="form-label" for="image">Upload Image(s)</label>
+				</div>
+			<div class="input-group mb-3">
+				<input type="file" class="form-control mb-2" id="image"  name="image" multiple>
+			</div>
+	<button type="submit" class="btn btn-primary" form="form1">Update Spot</button>
+
 	</form>
 </div>
+
