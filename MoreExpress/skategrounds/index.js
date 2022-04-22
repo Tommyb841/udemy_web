@@ -15,7 +15,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const ExpressError = require('./utilities/ExpressError'); 
 const skategroundsRoutes = require('./routes/skategrounds');
-const attributesRoutes = require('./routes/attributes');
+//const attributesRoutes = require('./routes/attributes');
 const reviewsRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/user');
 const passport = require('passport');
@@ -81,7 +81,7 @@ app.use((req,res,next) => {//{{{
 app.use('/', userRoutes)//{{{
 app.use('/skategrounds', skategroundsRoutes)
 app.use('/skategrounds/:id/reviews', reviewsRoutes)//}}}
-app.use('/skategrounds/:id/attributes', attributesRoutes)
+//app.use('/skategrounds/:id/attributes', attributesRoutes)
 
 //landing page route
 app.get('/', (req,res) => {//{{{
