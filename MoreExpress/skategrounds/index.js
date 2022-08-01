@@ -20,10 +20,12 @@ const reviewsRoutes = require('./routes/reviews');
 const userRoutes = require('./routes/user');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
-const User = require('./models/user')//}}}
+const User = require('./models/user');
+const MongoStore = require("connect-mongo")(session);
+const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/skategrounds';}}}
 
 //Mongodb connection
-mongoose.connect('mongodb://localhost:27017/skategrounds', { //{{{
+mongoose.connect( dbUrl, { //{{{
 
 useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
 	.then(() => {
@@ -48,8 +50,19 @@ app.use(express.urlencoded({ extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));//}}}
 
 //Session configuration, flash configs ,passport
-const sessionConfig = {//{{{
-	secret: 'Thisshouldbeabettersecret',
+const secret = process.env.SECRET ||  'Thisshouldbeabettersecret';
+const store = new MongoStore({//{{{
+	url: dbUrl,
+	secret,
+	touchAfter: 24*60*60
+})
+
+store.on("error",function (e){
+	console.log("SESSION STORE ERROR",e)
+})
+const sessionConfig = {
+	store,
+	secret,
 	resave: false,
 	saveUninitialized: true,
 	cookie: {
